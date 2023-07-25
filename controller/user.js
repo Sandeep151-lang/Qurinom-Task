@@ -61,8 +61,34 @@ router.post('/login',async(req,res)=>{
 })
 
 
+router.post('/post',async(req,res)=>{
+    const {id,post,email} = req.body
+    try {
+        const resp = await User.findOneAndUpdate({email:email},{$addToSet:{post:post}}, {
+            new: true,
+            upsert: true
+        })
+      return res.status(200).json({message:"Post added successfully",resp})
+    } catch (error) {
+      return  res.status(400).json({message:error})
+    }
+    
+})
 
 
+
+
+router.post('/getpost',async(req,res)=>{
+    const {email}= req.body
+    try {
+        const resp = await User.findOne({email:email})
+        if(resp){
+            return res.status(200).json(resp)
+        }
+    } catch (error) {
+        res.status(400).json({message:error})
+    }
+})
 
 
 module.exports = router
