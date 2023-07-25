@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const cors = require('express')
+const cors = require('cors')
 const env = require('dotenv')
 const bodyparser = require('body-parser')
 const user = require('./controller/user')
